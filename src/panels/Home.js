@@ -4,6 +4,7 @@ import Panel from '@vkontakte/vkui/dist/components/Panel/Panel';
 import PanelHeader from '@vkontakte/vkui/dist/components/PanelHeader/PanelHeader';
 import Profile from '../components/home/profile';
 import Applied from '../components/home/applied';
+import Events from "../components/home/events";
 
 const Home = ({ id, go }) => {
 	return (
@@ -11,6 +12,7 @@ const Home = ({ id, go }) => {
 			<PanelHeader>Волонтёр</PanelHeader>
 			<Profile />
 			<Applied />
+			<Events />
 		</Panel>
 	);
 };
