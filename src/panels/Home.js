@@ -6,11 +6,11 @@ import Profile from '../components/home/profile';
 import Applied from '../components/home/applied';
 import Events from "../components/home/events";
 
-const Home = ({ id, go }) => {
+const Home = ({ id, go, changePopout }) => {
 	return (
 		<Panel id={id}>
 			<PanelHeader>Волонтёр</PanelHeader>
-			<Profile />
+			<Profile changePopout={changePopout} />
 			<Applied />
 			<Events />
 		</Panel>
@@ -20,6 +20,7 @@ const Home = ({ id, go }) => {
 Home.propTypes = {
 	id: PropTypes.string.isRequired,
 	go: PropTypes.func.isRequired,
+	changePopout: PropTypes.func.isRequired,
 };
 
 export default Home;

@@ -1,8 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Group from '@vkontakte/vkui/dist/components/Group/Group';
 import Cell from '@vkontakte/vkui/dist/components/Cell/Cell';
 import Avatar from '@vkontakte/vkui/dist/components/Avatar/Avatar';
 import Button from '@vkontakte/vkui/dist/components/Button/Button';
+import ActionSheet from '@vkontakte/vkui/dist/components/ActionSheet/ActionSheet';
+import ActionSheetItem from '@vkontakte/vkui/dist/components/ActionSheetItem/ActionSheetItem';
 import Icon24Settings from '@vkontakte/icons/dist/24/settings';
 
 const styles = {
@@ -36,7 +39,15 @@ const styles = {
   }
 };
 
-const Profile = () => {
+const Profile = ({ changePopout }) => {
+  const openQR = () => changePopout(
+    <ActionSheet onClose={() => changePopout(null)}>
+      <ActionSheetItem autoclose>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" alt="Your QR code" />
+      </ActionSheetItem>
+    </ActionSheet>
+  );
+
   return (
     <Group style={ styles.profile }>
       <Cell
@@ -53,7 +64,7 @@ const Profile = () => {
         }
         bottomContent={
           <div style={ styles.qr }>
-            <Button size="m">Мой QR</Button>
+            <Button onClick={openQR} size="m">Мой QR</Button>
           </div>
         }
       >
@@ -76,6 +87,11 @@ const Profile = () => {
       </Cell>
     </Group>
   );
+};
+
+
+Profile.propTypes = {
+  changePopout: PropTypes.func.isRequired,
 };
 
 export default Profile;
