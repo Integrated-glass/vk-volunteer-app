@@ -4,14 +4,13 @@ import ModalPage from '@vkontakte/vkui/dist/components/ModalPage/ModalPage';
 import ModalPageHeader from '@vkontakte/vkui/dist/components/ModalPageHeader/ModalPageHeader';
 import Button from '@vkontakte/vkui/dist/components/Button/Button';
 import Div from '@vkontakte/vkui/dist/components/Div/Div';
-import FormLayout from '@vkontakte/vkui/dist/components/FormLayout/FormLayout';
-import FormLayoutGroup from '@vkontakte/vkui/dist/components/FormLayoutGroup/FormLayoutGroup';
 import HeaderButton from '@vkontakte/vkui/dist/components/HeaderButton/HeaderButton';
-import Input from '@vkontakte/vkui/dist/components/Input/Input';
-import Info from '@vkontakte/vkui/dist/components/InfoRow/InfoRow';
 import CancelIcon from '@vkontakte/icons/dist/24/cancel';
 import DoneIcon from '@vkontakte/icons/dist/24/done';
 import PropTypes from 'prop-types';
+
+import Interests from './interests';
+import Sputnik from './sputnik';
 
 const SETTINGS = 'modal-settings';
 const SPUTNIK = 'modal-sputnik';
@@ -41,7 +40,7 @@ const SettingsModal = ({changeModal}) => {
       </ModalPage>
 
       <ModalPage
-        id={SPUTNIK}
+        id="modal-sputnik"
         onClose={() => changeActive(SETTINGS)}
         header={
           <ModalPageHeader
@@ -51,25 +50,11 @@ const SettingsModal = ({changeModal}) => {
           </ModalPageHeader>
         }
       >
-        <Div style={{ height: 200 }}>
-          <img style={{ width: '100%' }} src="https://www.gmig.ru/upload/medialibrary/1ca/1cab8c01dc6aef8c1e6dacaf454307a7.png" alt="" />
-        </Div>
-
-        <Div>
-          <Info title="Описание">
-            Карта лояльности для музейных волонтеров «Спутник» даёт право бесплатного
-            прохода на крупнейшие площадки и постоянные экспозиции этих музеев и предоставляет
-            бонусы от партнеров программы: приложения для чтения книг Bookmate, книжного магазина
-            MMOMA ART BOOK SHOP и гастро-бара Powerhouse
-          </Info>
-        </Div>
-        <Div>
-          <Button level="secondary" onClick={() => changeActive(SETTINGS)} size="xl">Заказать</Button>
-        </Div>
+        <Sputnik />
       </ModalPage>
 
       <ModalPage
-        id={INTERESTS}
+        id="modal-interests"
         onClose={() => changeActive(SETTINGS)}
         header={
           <ModalPageHeader
@@ -80,11 +65,7 @@ const SettingsModal = ({changeModal}) => {
           </ModalPageHeader>
         }
       >
-        <FormLayout>
-          <FormLayoutGroup>
-            <Input type="text" defaultValue="" placeholder="Поиск" />
-          </FormLayoutGroup>
-        </FormLayout>
+        <Interests />
       </ModalPage>
     </ModalRoot>
   );
