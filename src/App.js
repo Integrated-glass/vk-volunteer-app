@@ -9,6 +9,7 @@ import Persik from './panels/Persik';
 const App = () => {
 	const [activePanel, setActivePanel] = useState('home');
 	const [popout, changePopout] = useState(null);
+	const [modal, changeModal] = useState(null);
 
 	useEffect(() => {
 		connect.subscribe(({ detail: { type, data }}) => {
@@ -25,8 +26,8 @@ const App = () => {
 	};
 
 	return (
-		<View popout={popout} activePanel={activePanel}>
-			<Home id="home" go={go} changePopout={changePopout} />
+		<View popout={popout} modal={modal} activePanel={activePanel}>
+			<Home id="home" go={go} changePopout={changePopout} changeModal={changeModal} />
 			<Persik id="persik" go={go} />
 		</View>
 	);

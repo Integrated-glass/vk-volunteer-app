@@ -4,9 +4,9 @@ import Group from '@vkontakte/vkui/dist/components/Group/Group';
 import Cell from '@vkontakte/vkui/dist/components/Cell/Cell';
 import Avatar from '@vkontakte/vkui/dist/components/Avatar/Avatar';
 import Button from '@vkontakte/vkui/dist/components/Button/Button';
-import ActionSheet from '@vkontakte/vkui/dist/components/ActionSheet/ActionSheet';
-import ActionSheetItem from '@vkontakte/vkui/dist/components/ActionSheetItem/ActionSheetItem';
 import Icon24Settings from '@vkontakte/icons/dist/24/settings';
+import SettingsModal from './settings-modal';
+import QRPopout from './qr-popout';
 
 const styles = {
   profileRight: {
@@ -39,13 +39,13 @@ const styles = {
   }
 };
 
-const Profile = ({ changePopout }) => {
+const Profile = ({ changePopout, changeModal }) => {
   const openQR = () => changePopout(
-    <ActionSheet onClose={() => changePopout(null)}>
-      <ActionSheetItem autoclose>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" alt="Your QR code" />
-      </ActionSheetItem>
-    </ActionSheet>
+    <QRPopout changePopout={changePopout} />
+  );
+
+  const openSettings = () => changeModal(
+    <SettingsModal changeModal={changeModal} />
   );
 
   return (
@@ -59,7 +59,7 @@ const Profile = ({ changePopout }) => {
 								<span style={ styles.karma }>
 									Карма: 69
 								</span>
-            <Icon24Settings style={ styles.icon } />
+            <Icon24Settings onClick={openSettings} style={ styles.icon } />
           </div>
         }
         bottomContent={
@@ -89,9 +89,9 @@ const Profile = ({ changePopout }) => {
   );
 };
 
-
 Profile.propTypes = {
   changePopout: PropTypes.func.isRequired,
+  changeModal: PropTypes.func.isRequired,
 };
 
 export default Profile;
