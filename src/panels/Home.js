@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {UserContext} from '../context';
 import Panel from '@vkontakte/vkui/dist/components/Panel/Panel';
 import PanelHeader from '@vkontakte/vkui/dist/components/PanelHeader/PanelHeader';
 import Profile from '../components/home/profile';
@@ -10,9 +11,19 @@ const Home = ({ id, go, changePopout, changeModal }) => {
 	return (
 		<Panel id={id}>
 			<PanelHeader>Волонтёр</PanelHeader>
-			<Profile changePopout={changePopout} changeModal={changeModal} />
-			<Applied go={go} />
-			<Events go={go} />
+			<UserContext.Consumer>
+				{({user}) => (
+					<>
+						{user && (
+							<>
+								<Profile changePopout={changePopout} changeModal={changeModal} user={user} />
+								<Applied go={go} />
+								<Events go={go} />
+							</>
+						)}
+					</>
+				)}
+			</UserContext.Consumer>
 		</Panel>
 	);
 };

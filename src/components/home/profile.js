@@ -47,7 +47,7 @@ const interests = [
   { id: 5, name: 'Шмотки' },
 ];
 
-const Profile = ({ changePopout, changeModal }) => {
+const Profile = ({ changePopout, changeModal, user }) => {
   const openQR = () => changePopout(
     <QRPopout changePopout={changePopout} />
   );
@@ -59,37 +59,37 @@ const Profile = ({ changePopout, changeModal }) => {
   return (
     <Group style={ styles.profile }>
       <Cell
-        before={<Avatar src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" size={80} />}
+        before={<Avatar src={user.photo} size={80}/>}
         size="l"
-        description="18 лет"
+        description={user.date_of_birth}
         asideContent={
-          <div style={ styles.profileRight }>
-								<span style={ styles.karma }>
-									Карма: 69
-								</span>
-            <Icon24Settings onClick={() => openModals('modal-settings')} style={ styles.icon } />
+          <div style={styles.profileRight}>
+                <span style={styles.karma}>
+                  Карма: 69
+                </span>
+            <Icon24Settings onClick={() => openModals('modal-settings')} style={styles.icon}/>
           </div>
         }
         bottomContent={
-          <div style={ styles.qr }>
+          <div style={styles.qr}>
             <Button onClick={openQR} size="m">Мой QR</Button>
           </div>
         }
       >
-        Семён Ефимов
+        {user.name + ' ' + user.surname}
       </Cell>
       <Cell
         size="l"
         bottomContent={
-          <div style={ styles.interests }>
+          <div style={styles.interests}>
             {interests.map(interest => (
               <Button
                 key={interest.id}
                 onClick={() => openModals('modal-interests')}
-                style={ styles.interestButton }
+                style={styles.interestButton}
                 level="outline"
               >
-                { interest.name }
+                {interest.name}
               </Button>
             ))}
           </div>
@@ -104,6 +104,7 @@ const Profile = ({ changePopout, changeModal }) => {
 Profile.propTypes = {
   changePopout: PropTypes.func.isRequired,
   changeModal: PropTypes.func.isRequired,
+  user: PropTypes.shape({}).isRequired,
 };
 
 export default Profile;
