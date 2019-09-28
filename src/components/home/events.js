@@ -27,7 +27,19 @@ const events = [
       'https://images.unsplash.com/photo-1569284588568-00bf249daa4b?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
       'https://images.unsplash.com/photo-1569326513472-830f1004d420?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80'
     ],
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.'
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.',
+    roles: [
+      {
+        id: 1,
+        name: 'Звукач',
+        description: 'Быть лучшем диджеем на планете иначе уволим. Все девушки должны течь от твоей музыки. Понятно? Платим гречкой.',
+      },
+      {
+        id: 2,
+        name: 'Стукач',
+        description: 'Вести себя как крыса все мероприятие напролет и жаловаться на гостей о том, какие они ужасные.',
+      },
+    ],
   },
   {
     id: 2,
@@ -39,6 +51,18 @@ const events = [
       'https://images.unsplash.com/photo-1569000971931-79997657265f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
     ],
     description: 'Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum',
+    roles: [
+      {
+        id: 1,
+        name: 'Трюкач',
+        description: 'Мега апасный парень, способный перепрыгивать с крышу на крышу по всему Питеру. В конце должен дропнуться с Исакия.',
+      },
+      {
+        id: 2,
+        name: 'Хач',
+        description: 'Хей, дэушка, как дэла? Пайдом прокачу на маем тазе,',
+      },
+    ],
   },
 ];
 
