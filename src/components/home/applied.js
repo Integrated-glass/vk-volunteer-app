@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Group from '@vkontakte/vkui/dist/components/Group/Group';
 import Header from '@vkontakte/vkui/dist/components/Header/Header';
 import Horizontal from '@vkontakte/vkui/dist/components/HorizontalScroll/HorizontalScroll';
@@ -40,7 +41,7 @@ const events = [
   },
 ];
 
-const Applied = () => {
+const Applied = ({go}) => {
   return (
     <Group>
       <Header level="secondary">Мои мероприятия</Header>
@@ -61,6 +62,10 @@ const Applied = () => {
       </Horizontal>
     </Group>
   );
+};
+
+Applied.propTypes = {
+  go: PropTypes.func.isRequired,
 };
 
 export default Applied;

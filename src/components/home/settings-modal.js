@@ -16,8 +16,8 @@ const SETTINGS = 'modal-settings';
 const SPUTNIK = 'modal-sputnik';
 const INTERESTS = 'modal-interests';
 
-const SettingsModal = ({changeModal}) => {
-  const [activeModal, changeActive] = useState(SETTINGS);
+const SettingsModal = ({changeModal, active}) => {
+  const [activeModal, changeActive] = useState(active);
 
   return (
     <ModalRoot activeModal={activeModal}>
@@ -73,6 +73,11 @@ const SettingsModal = ({changeModal}) => {
 
 SettingsModal.propTypes = {
   changeModal: PropTypes.func.isRequired,
+  active: PropTypes.string,
+};
+
+SettingsModal.defaultProps = {
+  active: 'modal-settings'
 };
 
 export default SettingsModal;

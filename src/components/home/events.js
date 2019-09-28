@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import {EventContext} from '../../context';
 import Group from '@vkontakte/vkui/dist/components/Group/Group';
 import Gallery from '@vkontakte/vkui/dist/components/Gallery/Gallery';
 import Cell from '@vkontakte/vkui/dist/components/Cell/Cell';
@@ -40,35 +42,54 @@ const events = [
   },
 ];
 
-const Events = () => {
+const Events = ({go}) => {
+  const goToEvent = (e, value, change) => {
+    change(value);
+    go(e);
+  };
+
   return (
-    <>
-      {events.map((event, index) => (
-        <Group key={ event.id }>
-          { index === 0 &&
-            <Group title="Все мероприятия"/>
-          }
-          <Cell description={ event.date + ', ' + event.place }>
-            { event.name }
-          </Cell>
-          <Gallery
-            slideWidth="95%"
-            style={ styles.gallery }
-            bullets="dark"
-          >
-            {event.photos.map((photo, i) => (
-              <div key={i} style={{ background: `url(${photo})`, ...styles.image }} />
-            ))}
-          </Gallery>
-          <Div>
-            <Info title="Описание">
-              { event.description }
-            </Info>
-          </Div>
-        </Group>
-      ))}
-    </>
+    <EventContext.Consumer>
+      {({changeEvent}) => (
+        <>
+          {events.map((event, index) => (
+            <Group key={ event.id }>
+              { index === 0 &&
+                <Group title="Все мероприятия"/>
+              }
+              <Cell
+                onClick={(e) => goToEvent(e, event, changeEvent)}
+                data-to="event"
+                description={ event.date + ', ' + event.place }
+              >
+                { event.name }
+              </Cell>
+              <Gallery
+                onClick={(e) => goToEvent(e, event, changeEvent)}
+                data-to="event"
+                slideWidth="95%"
+                style={ styles.gallery }
+                bullets="dark"
+              >
+                {event.photos.map((photo, i) => (
+                  <div key={i} style={{ background: `url(${photo})`, ...styles.image }} />
+                ))}
+              </Gallery>
+              <Div>
+                <Info title="Описание">
+                  { event.description }
+                </Info>
+              </Div>
+            </Group>
+          ))}
+        </>
+      )}
+    </EventContext.Consumer>
   );
+};
+
+Events.propTypes = {
+  go: PropTypes.func.isRequired,
 };
 
 export default Events;

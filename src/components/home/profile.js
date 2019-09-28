@@ -39,13 +39,21 @@ const styles = {
   }
 };
 
+const interests = [
+  { id: 1, name: 'Секс' },
+  { id: 2, name: 'Наркотики' },
+  { id: 3, name: 'Рок-н-ролл' },
+  { id: 4, name: 'Гринпис' },
+  { id: 5, name: 'Шмотки' },
+];
+
 const Profile = ({ changePopout, changeModal }) => {
   const openQR = () => changePopout(
     <QRPopout changePopout={changePopout} />
   );
 
-  const openSettings = () => changeModal(
-    <SettingsModal changeModal={changeModal} />
+  const openModals = (active) => changeModal(
+    <SettingsModal changeModal={changeModal} active={active} />
   );
 
   return (
@@ -59,7 +67,7 @@ const Profile = ({ changePopout, changeModal }) => {
 								<span style={ styles.karma }>
 									Карма: 69
 								</span>
-            <Icon24Settings onClick={openSettings} style={ styles.icon } />
+            <Icon24Settings onClick={() => openModals('modal-settings')} style={ styles.icon } />
           </div>
         }
         bottomContent={
@@ -74,12 +82,16 @@ const Profile = ({ changePopout, changeModal }) => {
         size="l"
         bottomContent={
           <div style={ styles.interests }>
-            <Button level="outline" style={{ marginBottom: '.5em' }}>Секс</Button>
-            <Button level="outline" style={{ marginBottom: '.5em' }}>Наркотики</Button>
-            <Button level="outline" style={{ marginBottom: '.5em' }}>Рок-н-ролл</Button>
-            <Button level="outline" style={{ marginBottom: '.5em' }}>Котики</Button>
-            <Button level="outline" style={{ marginBottom: '.5em' }}>Цветы</Button>
-            <Button level="outline" style={ styles.interestButton }>Политех</Button>
+            {interests.map(interest => (
+              <Button
+                key={interest.id}
+                onClick={() => openModals('modal-interests')}
+                style={ styles.interestButton }
+                level="outline"
+              >
+                { interest.name }
+              </Button>
+            ))}
           </div>
         }
       >

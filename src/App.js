@@ -4,12 +4,14 @@ import View from '@vkontakte/vkui/dist/components/View/View';
 import '@vkontakte/vkui/dist/vkui.css';
 
 import Home from './panels/Home';
-import Persik from './panels/Persik';
+import Event from './panels/event';
+import {EventContext} from './context';
 
 const App = () => {
 	const [activePanel, setActivePanel] = useState('home');
 	const [popout, changePopout] = useState(null);
 	const [modal, changeModal] = useState(null);
+	const [event, changeEvent] = useState({});
 
 	useEffect(() => {
 		connect.subscribe(({ detail: { type, data }}) => {
@@ -26,10 +28,12 @@ const App = () => {
 	};
 
 	return (
-		<View popout={popout} modal={modal} activePanel={activePanel}>
-			<Home id="home" go={go} changePopout={changePopout} changeModal={changeModal} />
-			<Persik id="persik" go={go} />
-		</View>
+		<EventContext.Provider value={{event, changeEvent}}>
+			<View popout={popout} modal={modal} activePanel={activePanel}>
+				<Home id="home" go={go} changePopout={changePopout} changeModal={changeModal} />
+				<Event id="event" go={go} />
+			</View>
+		</EventContext.Provider>
 	);
 };
 

@@ -11,8 +11,8 @@ const Home = ({ id, go, changePopout, changeModal }) => {
 		<Panel id={id}>
 			<PanelHeader>Волонтёр</PanelHeader>
 			<Profile changePopout={changePopout} changeModal={changeModal} />
-			<Applied />
-			<Events />
+			<Applied go={go} />
+			<Events go={go} />
 		</Panel>
 	);
 };

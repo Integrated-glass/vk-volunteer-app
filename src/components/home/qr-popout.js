@@ -8,7 +8,6 @@ const QRPopout = ({changePopout}) => {
     <ActionSheet onClose={() => changePopout(null)}>
       <ActionSheetItem autoclose>
         <img
-          width={250}
           height={250}
           style={{ margin: 'auto' }}
           src="https://cdn.qrstuff.com/images/default_qrcode.png"
