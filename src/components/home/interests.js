@@ -1,4 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import gql from 'graphql-tag';
+import { useApolloClient } from '@apollo/react-hooks';
 import FormLayout from '@vkontakte/vkui/dist/components/FormLayout/FormLayout';
 import FormLayoutGroup from '@vkontakte/vkui/dist/components/FormLayoutGroup/FormLayoutGroup';
 import Cell from '@vkontakte/vkui/dist/components/Cell/Cell';
@@ -6,29 +8,25 @@ import Search from '@vkontakte/vkui/dist/components/Search/Search';
 import Group from '@vkontakte/vkui/dist/components/Group/Group';
 import List from '@vkontakte/vkui/dist/components/List/List';
 
-const interests = [
-  { id: 1, name: 'Секс' },
-  { id: 2, name: 'Наркотики' },
-  { id: 3, name: 'Рок-н-ролл' },
-  { id: 4, name: 'Гринпис' },
-  { id: 5, name: 'Шмотки' },
-  { id: 6, name: 'Котики' },
-  { id: 7, name: 'Фарфор' },
-  { id: 8, name: 'Китайская культура' },
-  { id: 9, name: 'Живопись' },
-  { id: 10, name: 'Машины' },
-  { id: 11, name: 'Литература' },
-  { id: 12, name: 'Компьютер саенс' },
-];
+const GET_TAGS = gql`
+    {
+        tags {
+            id
+            name
+        }
+    }
+`;
 
 const Interests = () => {
   const [search, changeSearch] = useState('');
-  const [results, changeResults] = useState(interests);
+  const [tags, changeTags] = useState([]);
+  const [results, changeResults] = useState([]);
   const [chosen, changeChosen] = useState([]);
+  const client = useApolloClient();
 
   const onSearchChange = (value) => {
     changeSearch(value);
-    changeResults(interests.filter(({name}) => name.toLowerCase().indexOf(value) > -1));
+    changeResults(tags.filter(({name}) => name.toLowerCase().indexOf(value) > -1));
   };
 
   const onSelectableChange = (value) => {
@@ -39,16 +37,28 @@ const Interests = () => {
     }
   };
 
+  useEffect(() => {
+    client.query({
+      query: GET_TAGS,
+    })
+      .then(result => {
+        changeTags(result.data.tags);
+        changeResults(result.data.tags);
+      })
+  }, []);
+
   return (
     <FormLayout>
       <FormLayoutGroup>
         <Search value={search} onChange={onSearchChange}/>
-        <Group>
-          <List>
-            {results.map(result => (
-              <Cell key={result.id} selectable onClick={() => onSelectableChange(result)}>{ result.name }</Cell>
-            ))}
-          </List>
+        <Group style={{height: 300}}>
+          {tags && (
+            <List>
+              {results.map(tag => (
+                <Cell key={tag.id} selectable onClick={() => onSelectableChange(tag)}>{ tag.name }</Cell>
+              ))}
+            </List>
+          )}
         </Group>
       </FormLayoutGroup>
     </FormLayout>

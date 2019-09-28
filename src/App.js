@@ -9,8 +9,9 @@ import '@vkontakte/vkui/dist/vkui.css';
 import Home from './panels/Home';
 import Event from './panels/event';
 import { EventContext, UserContext } from './context';
+import fetch from './fetch';
 
-const client = new ApolloClient({
+const clientApollo = new ApolloClient({
 	uri: 'http://demo130.foxtrot.vkhackathon.com:8081/v1/graphql',
 });
 
@@ -35,36 +36,40 @@ const App = () => {
 				vk_id: profile.id || '',
 				name: profile.first_name || '',
 				surname: profile.last_name || '',
-				date_of_birth: profile.bdate || '',
+				date_of_birth: profile.bdate.match(/\./g).length === 2 ? profile.bdate : null,
 				photo: profile.photo_100 || '',
 			};
 			user = await getUserFromServer(user);
 			if (!user.email) {
-				user = {...user, email: await getEmail()};
+				user = {...user, email: await getEmail(user)};
 			}
-			if (!user.tel) {
-				user = {...user, phone_number: await getTel()};
+			if (!user.phone_number) {
+				user = {...user, phone_number: await getTel(user)};
 			}
 			changeUser(user);
-			console.log(user);
 
 			changePopout(null);
 		}
 		async function getUserFromServer(user) {
-			return await user;
+			return await fetch('/volunteer/login', 'POST', user);
 		}
-		async function getEmail() {
+		async function getEmail(user) {
 			try {
 				const email = await connect.sendPromise('VKWebAppGetEmail', {});
-				return email.email;
+
+				const res = await fetch('/volunteer/patch', 'POST', {vk_id: user.vk_id, update_data: {email: email.email}});
+				return res.email;
 			} catch (e) {
 				console.warn(e);
 			}
 		}
-		async function getTel() {
+		async function getTel(user) {
 			try {
 				const tel = await connect.sendPromise('VKWebAppGetPhoneNumber', {});
-				return tel.phone_number;
+				console.log('tel', tel);
+				const res = await fetch('/volunteer/patch', 'POST', {vk_id: user.vk_id, update_data: {phone_number: tel.phone_number}});
+				console.log('ph', res);
+				return res.phone_number;
 			} catch (e) {
 				console.warn(e);
 			}
@@ -79,7 +84,7 @@ const App = () => {
 	return (
 		<EventContext.Provider value={{event, changeEvent}}>
 			<UserContext.Provider value={{user, changeUser}}>
-				<ApolloProvider client={client}>
+				<ApolloProvider client={clientApollo}>
 					<View popout={popout} modal={modal} activePanel={activePanel}>
 						<Home id="home" go={go} changePopout={changePopout} changeModal={changeModal}/>
 						<Event id="event" go={go} />
