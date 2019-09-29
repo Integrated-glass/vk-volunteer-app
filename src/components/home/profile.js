@@ -57,7 +57,7 @@ const Profile = ({ changePopout, changeModal, user }) => {
         asideContent={
           <div style={styles.profileRight}>
                 <span style={styles.karma}>
-                  Карма: 69
+                  Карма: {user.karma}
                 </span>
             <Icon24Settings onClick={() => openModals('modal-settings')} style={styles.icon}/>
           </div>
