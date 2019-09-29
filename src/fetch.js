@@ -1,7 +1,7 @@
-const SERVER_BASE = 'https://demo130.foxtrot.vkhackathon.com/api';
+import {API_HOST} from './constants';
 
 export default (url, method, payload) => {
-  return fetch(SERVER_BASE + url, {
+  return fetch(API_HOST + '/api' + url, {
     method: method,
     headers: {
       'Content-Type': 'application/json',

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
+import {API_HOST} from '../../constants';
 import dateFormat from '../../dates';
 import { useApolloClient } from '@apollo/react-hooks';
 import {EventContext} from '../../context';
@@ -20,13 +21,6 @@ const styles = {
   },
 };
 
-const photos = [
-  'https://images.unsplash.com/photo-1569284588568-00bf249daa4b?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
-  'https://images.unsplash.com/photo-1569326513472-830f1004d420?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
-  'https://images.unsplash.com/photo-1569441499879-10880df919d6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1052&q=80',
-  'https://images.unsplash.com/photo-1569000971931-79997657265f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
-];
-
 const GET_EVENTS = gql`
     {
         events {
@@ -35,13 +29,27 @@ const GET_EVENTS = gql`
             name
             start_datetime
             end_datetime
+            age_restriction
+            base_karma_to_pay
+            location
+            photos {
+                id
+                link
+            }
             roles {
                 id
                 name
                 description
             }
+            event_tags {
+                tag {
+                    id
+                    name
+                }
+            }
         }
     }
+
 `;
 
 const Events = ({go}) => {
@@ -73,7 +81,7 @@ const Events = ({go}) => {
                   <Cell
                     onClick={(e) => goToEvent(e, event, changeEvent)}
                     data-to="event"
-                    description={ dateFormat(event.start_datetime, event.end_datetime) + ', ' + event.place }
+                    description={ dateFormat(event.start_datetime, event.end_datetime) + ', ' + event.location }
                   >
                     { event.name }
                   </Cell>
@@ -84,9 +92,9 @@ const Events = ({go}) => {
                     style={ styles.gallery }
                     bullets="dark"
                   >
-                    {/*{event.photos.map((photo, i) => (*/}
-                      <div style={{ background: `url(${photos[index % 4]})`, ...styles.image }} />
-                    {/*))}*/}
+                    {event.photos.map((photo) => (
+                      <div key={photo.id} style={{ background: `url('${API_HOST + '/' + photo.link}')`, ...styles.image }} />
+                    ))}
                   </Gallery>
                   <Div>
                     <Info title="Описание">

@@ -15,6 +15,8 @@ import Div from '@vkontakte/vkui/dist/components/Div/Div';
 import Info from '@vkontakte/vkui/dist/components/InfoRow/InfoRow';
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
+import {API_HOST} from '../constants';
+import dateFormat from '../dates';
 
 const osName = platform();
 
@@ -51,12 +53,6 @@ const styles = {
   }
 };
 
-const interests = [
-  { id: 1, name: 'Секс' },
-  { id: 2, name: 'Наркотики' },
-  { id: 3, name: 'Рок-н-ролл' },
-];
-
 const Event = ({id, go}) => (
   <EventContext.Consumer>
     {({event}) => (
@@ -74,24 +70,24 @@ const Event = ({id, go}) => (
             style={ styles.gallery }
             bullets="dark"
           >
-            {/*{event.photos.map((photo, i) => (*/}
-              <div style={{ background: `url('https://images.unsplash.com/photo-1569284588568-00bf249daa4b?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80')`, ...styles.image }} />
-            {/*))}*/}
+            {event.photos.map((photo) => (
+              <div key={photo.id} style={{ background: `url('${API_HOST + '/' + photo.link}')`, ...styles.image }} />
+            ))}
           </Gallery>
           <Cell
-            description={ event.date + ', ' + event.place }
-            asideContent={<div style={styles.ageRestrict}>18+</div>}
+            description={ dateFormat(event.start_datetime, event.end_datetime) + ', ' + event.location }
+            asideContent={<div style={styles.ageRestrict}>{event.age_restriction}+</div>}
           >
             { event.name }
           </Cell>
           <Div style={ styles.interests }>
-            {interests.map(interest => (
+            {event.event_tags.map(tag => (
               <Button
-                key={interest.id}
+                key={tag.tag.id}
                 style={ styles.interestButton }
                 level="outline"
               >
-                { interest.name }
+                { tag.tag.name }
               </Button>
             ))}
           </Div>

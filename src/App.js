@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
+import { GQL_HOST } from './constants';
 import connect from '@vkontakte/vk-connect';
 import View from '@vkontakte/vkui/dist/components/View/View';
 import ScreenSpinner from '@vkontakte/vkui/dist/components/ScreenSpinner/ScreenSpinner';
@@ -11,9 +12,7 @@ import Event from './panels/event';
 import { EventContext, UserContext } from './context';
 import fetch from './fetch';
 
-const clientApollo = new ApolloClient({
-	uri: 'http://demo130.foxtrot.vkhackathon.com:8081/v1/graphql',
-});
+const clientApollo = new ApolloClient({ uri: GQL_HOST });
 
 const App = () => {
 	const [activePanel, setActivePanel] = useState('home');
