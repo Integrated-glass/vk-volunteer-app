@@ -98,7 +98,7 @@ const Event = ({id, go}) => (
           </Div>
           <Div>
             <Info title="Доступ">
-              Требуется карма > 55
+              Требуется карма > <strong>{ event.base_karma_to_pay }</strong>
             </Info>
           </Div>
         </Group>
