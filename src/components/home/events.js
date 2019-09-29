@@ -56,11 +56,7 @@ const Events = ({go}) => {
   useEffect(() => {
     client.query({
       query: GET_EVENTS,
-    })
-      .then(result => {
-        console.log('kek', result);
-        changeEvents(result.data.events);
-      })
+    }).then(result => { changeEvents(result.data.events); })
   }, []);
 
   return (

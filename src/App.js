@@ -40,35 +40,32 @@ const App = () => {
 				photo: profile.photo_100 || '',
 			};
 			user = await getUserFromServer(user);
-			if (!user.email) {
-				user = {...user, email: await getEmail(user)};
-			}
-			if (!user.phone_number) {
-				user = {...user, phone_number: await getTel(user)};
-			}
+
+			if (!user.email) user = {...user, email: await getEmail(user)};
+			if (!user.phone_number) user = {...user, phone_number: await getTel(user)};
 			changeUser(user);
 
 			changePopout(null);
 		}
+
 		async function getUserFromServer(user) {
 			return await fetch('/volunteer/login', 'POST', user);
 		}
+
 		async function getEmail(user) {
 			try {
 				const email = await connect.sendPromise('VKWebAppGetEmail', {});
-
 				const res = await fetch('/volunteer/patch', 'POST', {vk_id: user.vk_id, update_data: {email: email.email}});
 				return res.email;
 			} catch (e) {
 				console.warn(e);
 			}
 		}
+
 		async function getTel(user) {
 			try {
 				const tel = await connect.sendPromise('VKWebAppGetPhoneNumber', {});
-				console.log('tel', tel);
 				const res = await fetch('/volunteer/patch', 'POST', {vk_id: user.vk_id, update_data: {phone_number: tel.phone_number}});
-				console.log('ph', res);
 				return res.phone_number;
 			} catch (e) {
 				console.warn(e);

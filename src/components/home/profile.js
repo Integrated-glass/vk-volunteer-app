@@ -39,14 +39,6 @@ const styles = {
   }
 };
 
-const interests = [
-  { id: 1, name: 'Секс' },
-  { id: 2, name: 'Наркотики' },
-  { id: 3, name: 'Рок-н-ролл' },
-  { id: 4, name: 'Гринпис' },
-  { id: 5, name: 'Шмотки' },
-];
-
 const Profile = ({ changePopout, changeModal, user }) => {
   const openQR = () => changePopout(
     <QRPopout changePopout={changePopout} />
@@ -82,7 +74,7 @@ const Profile = ({ changePopout, changeModal, user }) => {
         size="l"
         bottomContent={
           <div style={styles.interests}>
-            {interests.map(interest => (
+            {user.interests.map(interest => (
               <Button
                 key={interest.id}
                 onClick={() => openModals('modal-interests')}
