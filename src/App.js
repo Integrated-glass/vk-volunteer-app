@@ -12,7 +12,7 @@ import { EventContext, UserContext } from './context';
 import fetch from './fetch';
 
 const clientApollo = new ApolloClient({
-	uri: 'https://demo130.foxtrot.vkhackathon.com:8081/v1/graphql',
+	uri: 'http://demo130.foxtrot.vkhackathon.com:8081/v1/graphql',
 });
 
 const App = () => {

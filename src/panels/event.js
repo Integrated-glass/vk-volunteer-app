@@ -74,9 +74,9 @@ const Event = ({id, go}) => (
             style={ styles.gallery }
             bullets="dark"
           >
-            {event.photos.map((photo, i) => (
-              <div key={i} style={{ background: `url(${photo})`, ...styles.image }} />
-            ))}
+            {/*{event.photos.map((photo, i) => (*/}
+              <div style={{ background: `url('https://images.unsplash.com/photo-1569284588568-00bf249daa4b?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80')`, ...styles.image }} />
+            {/*))}*/}
           </Gallery>
           <Cell
             description={ event.date + ', ' + event.place }
