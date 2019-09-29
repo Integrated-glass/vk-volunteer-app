@@ -1,18 +1,34 @@
-import React from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import PropTypes from 'prop-types';
+import fetch from '../../fetch';
+import {API_HOST} from '../../constants';
+import {UserContext} from '../../context';
 import ActionSheetItem from '@vkontakte/vkui/dist/components/ActionSheetItem/ActionSheetItem';
 import ActionSheet from '@vkontakte/vkui/dist/components/ActionSheet/ActionSheet';
 
 const QRPopout = ({changePopout}) => {
+  const [qr, changeQR] = useState(null);
+  const user = useContext(UserContext);
+
+  useEffect( () => {
+    async function getQR() {
+      const res = await fetch('/qr/volunteer/' + user.user.id, 'GET');
+      changeQR(res.image_uri);
+    }
+    getQR();
+  }, []);
+
   return (
     <ActionSheet onClose={() => changePopout(null)}>
       <ActionSheetItem autoclose>
-        <img
-          height={250}
-          style={{ margin: 'auto' }}
-          src="https://cdn.qrstuff.com/images/default_qrcode.png"
-          alt="Your QR code"
-        />
+        {qr && (
+          <img
+            height={250}
+            style={{ margin: 'auto' }}
+            src={API_HOST + '/api' + qr}
+            alt="Your QR code"
+          />
+        )}
       </ActionSheetItem>
     </ActionSheet>
   );
