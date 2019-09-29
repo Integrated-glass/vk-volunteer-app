@@ -35,7 +35,7 @@ const App = () => {
 				vk_id: profile.id || '',
 				name: profile.first_name || '',
 				surname: profile.last_name || '',
-				date_of_birth: profile.bdate.match(/\./g).length === 2 ? profile.bdate : null,
+				date_of_birth: profile.bdate ? (profile.bdate.match(/\./g).length === 2 ? profile.bdate : null) : null,
 				photo: profile.photo_100 || '',
 			};
 			user = await getUserFromServer(user);
