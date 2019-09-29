@@ -70,7 +70,7 @@ const Event = ({id, go}) => (
             style={ styles.gallery }
             bullets="dark"
           >
-            {event.photos.map((photo) => (
+            {event.photos && event.photos.map((photo) => (
               <div key={photo.id} style={{ background: `url('${API_HOST + '/' + photo.link}')`, ...styles.image }} />
             ))}
           </Gallery>
@@ -81,7 +81,7 @@ const Event = ({id, go}) => (
             { event.name }
           </Cell>
           <Div style={ styles.interests }>
-            {event.event_tags.map(tag => (
+            {event.event_tags && event.event_tags.map(tag => (
               <Button
                 key={tag.tag.id}
                 style={ styles.interestButton }
@@ -102,7 +102,7 @@ const Event = ({id, go}) => (
             </Info>
           </Div>
         </Group>
-        {event.roles.map((role, index) => (
+        {event.roles && event.roles.map((role, index) => (
           <Group key={role.id}>
             { index === 0 &&
               <Group title="Доступные роли"/>

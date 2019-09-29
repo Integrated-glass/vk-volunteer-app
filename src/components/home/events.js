@@ -92,7 +92,7 @@ const Events = ({go}) => {
                     style={ styles.gallery }
                     bullets="dark"
                   >
-                    {event.photos.map((photo) => (
+                    {event.photos && event.photos.map((photo) => (
                       <div key={photo.id} style={{ background: `url('${API_HOST + '/' + photo.link}')`, ...styles.image }} />
                     ))}
                   </Gallery>

@@ -74,7 +74,7 @@ const Profile = ({ changePopout, changeModal, user }) => {
         size="l"
         bottomContent={
           <div style={styles.interests}>
-            {user.interests.map(interest => (
+            {user.interests && user.interests.map(interest => (
               <Button
                 key={interest.id}
                 onClick={() => openModals('modal-interests')}
